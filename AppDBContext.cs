@@ -20,5 +20,12 @@ namespace EF_Core_Practices
 
             optionsBuilder.UseSqlServer(ConnectionString);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Students>()
+                .HasKey(s => s.StudentID);
+        }
+
     }
 }

@@ -2,12 +2,12 @@
 
 
 
+using EF_Core_Practices;
 
-using Microsoft.Extensions.Configuration;
-
-var config = new ConfigurationBuilder()
-           .AddJsonFile("appSettings.json")
-           .Build();
-var ConnectionString = config.GetSection("ConnectionStrings").Value;
-
-Console.WriteLine(ConnectionString);
+using (var context = new AppDBContext())
+{
+    foreach (var Student in context.students)
+    {
+        Console.WriteLine(Student);
+    }
+}
