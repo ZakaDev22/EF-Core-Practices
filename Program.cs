@@ -70,13 +70,33 @@ using EF_Core_Practices;
 //-------------------------------------------------------------------
 // Select Student With Grade >= 80 
 
+//using (var context = new AppDBContext())
+//{
+//    var students = context.students.Where(x => x.Grade >= 80);
+
+//    foreach (var student in students)
+//    {
+//        Console.WriteLine(student);
+//    }
+
+//}
+
+//-------------------------------------------------------------------
+// Using Transaction 
+
 using (var context = new AppDBContext())
 {
-    var students = context.students.Where(x => x.Grade >= 80);
-
-    foreach (var student in students)
+    using (var Transaction = context.Database.BeginTransaction())
     {
-        Console.WriteLine(student);
+        var student1 = context.students.Single(x => x.StudentID == 1);
+        var student2 = context.students.Single(x => x.StudentID == 2);
+
+        student1.Grade = 99;
+        student2.Grade = 50;
+
+        context.SaveChanges();
+
+        Transaction.Commit();
     }
 
 }
