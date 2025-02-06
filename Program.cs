@@ -58,11 +58,25 @@ using EF_Core_Practices;
 //-------------------------------------------------------------------
 // Update Student 
 
+//using (var context = new AppDBContext())
+//{
+//    var student = context.students.Single(x => x.StudentID == 8);
+
+//    context.students.Remove(student);
+
+//    context.SaveChanges();
+//}
+
+//-------------------------------------------------------------------
+// Select Student With Grade >= 80 
+
 using (var context = new AppDBContext())
 {
-    var student = context.students.Single(x => x.StudentID == 8);
+    var students = context.students.Where(x => x.Grade >= 80);
 
-    context.students.Remove(student);
+    foreach (var student in students)
+    {
+        Console.WriteLine(student);
+    }
 
-    context.SaveChanges();
 }
