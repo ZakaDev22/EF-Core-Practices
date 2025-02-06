@@ -47,10 +47,22 @@ using EF_Core_Practices;
 //-------------------------------------------------------------------
 // Update Student 
 
+//using (var context = new AppDBContext())
+//{
+//    var student = context.students.Single(x => x.StudentID == 11);
+//    student.Grade = 99;
+
+//    context.SaveChanges();
+//}
+
+//-------------------------------------------------------------------
+// Update Student 
+
 using (var context = new AppDBContext())
 {
-    var student = context.students.Single(x => x.StudentID == 11);
-    student.Grade = 99;
+    var student = context.students.Single(x => x.StudentID == 8);
+
+    context.students.Remove(student);
 
     context.SaveChanges();
 }
