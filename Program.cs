@@ -14,7 +14,9 @@ using EF_Core_Practices;
 //    }
 //}
 
+//---------------------------------------------------------------------------------------------------
 //// Print By ID
+
 //int IdToRetrive = 1;
 //using (var context = new AppDBContext())
 //{
@@ -25,18 +27,30 @@ using EF_Core_Practices;
 //     Console.WriteLine(student);
 //}
 
+//-------------------------------------------------------------------------------------------
 // Add Student
 
-var student = new Students
-{
-    Name = "Zakaria",
-    Subject = "Programming",
-    Grade = 80,
-    IsActive = true
-};
+//var student = new Students
+//{
+//    Name = "Zakaria",
+//    Subject = "Programming",
+//    Grade = 80,
+//    IsActive = true
+//};
+
+//using (var context = new AppDBContext())
+//{
+//    context.students.Add(student);
+//    context.SaveChanges();
+//}
+
+//-------------------------------------------------------------------
+// Update Student 
 
 using (var context = new AppDBContext())
 {
-    context.students.Add(student);
+    var student = context.students.Single(x => x.StudentID == 11);
+    student.Grade = 99;
+
     context.SaveChanges();
 }
