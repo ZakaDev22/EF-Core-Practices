@@ -18,7 +18,9 @@ namespace EF_Core_Practices
         {
             base.OnModelCreating(modelBuilder);
 
-            new StudentsConfigurations().Configure(modelBuilder.Entity<Students>());
+            // new StudentsConfigurations().Configure(modelBuilder.Entity<Students>());
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentsConfigurations).Assembly);
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
