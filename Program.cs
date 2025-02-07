@@ -3,6 +3,9 @@
 
 
 using EF_Core_Practices;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 // Print All
 //using (var context = new AppDBContext())
@@ -84,19 +87,44 @@ using EF_Core_Practices;
 //-------------------------------------------------------------------
 // Using Transaction 
 
-using (var context = new AppDBContext())
+//using (var context = new AppDBContext())
+//{
+//    using (var Transaction = context.Database.BeginTransaction())
+//    {
+//        var student1 = context.students.Single(x => x.StudentID == 1);
+//        var student2 = context.students.Single(x => x.StudentID == 2);
+
+//        student1.Grade = 99;
+//        student2.Grade = 50;
+
+//        context.SaveChanges();
+
+//        Transaction.Commit();
+//    }
+
+//}
+
+// --------------------------------------------------------------------------
+
+// Using Dependancy Injection
+
+var config = new ConfigurationBuilder()
+                      .AddJsonFile("appSettings.json")
+                      .Build();
+var ConnectionString = config.GetSection("ConnectionStrings").Value;
+
+var services = new ServiceCollection();
+
+services.AddDbContext<AppDBContext>(options =>
+   options.UseSqlServer(ConnectionString)
+);
+
+IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+using (var context = serviceProvider.GetService<AppDBContext>())
 {
-    using (var Transaction = context.Database.BeginTransaction())
+    foreach (var item in context!.students)
     {
-        var student1 = context.students.Single(x => x.StudentID == 1);
-        var student2 = context.students.Single(x => x.StudentID == 2);
-
-        student1.Grade = 99;
-        student2.Grade = 50;
-
-        context.SaveChanges();
-
-        Transaction.Commit();
+        Console.WriteLine(item);
     }
-
 }

@@ -1,7 +1,10 @@
-﻿namespace EF_Core_Practices
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EF_Core_Practices
 {
     public class Students
     {
+        [Key]
         public int StudentID { get; set; }
         public string Name { get; set; }
         public string Subject { get; set; }
