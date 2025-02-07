@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EF_Core_Practices.Data.Config;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace EF_Core_Practices
@@ -11,6 +12,13 @@ namespace EF_Core_Practices
             : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            new StudentsConfigurations().Configure(modelBuilder.Entity<Students>());
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
