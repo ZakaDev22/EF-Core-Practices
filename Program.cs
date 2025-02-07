@@ -108,6 +108,30 @@ using Microsoft.Extensions.DependencyInjection;
 
 // Using Dependancy Injection
 
+//var config = new ConfigurationBuilder()
+//                      .AddJsonFile("appSettings.json")
+//                      .Build();
+//var ConnectionString = config.GetSection("ConnectionStrings").Value;
+
+//var services = new ServiceCollection();
+
+//services.AddDbContext<AppDBContext>(options =>
+//   options.UseSqlServer(ConnectionString)
+//);
+
+//IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+//using (var context = serviceProvider.GetService<AppDBContext>())
+//{
+//    foreach (var item in context!.students)
+//    {
+//        Console.WriteLine(item);
+//    }
+//}
+
+// --------------------------------------------------------------------
+// Using Context factory Pattern
+
 var config = new ConfigurationBuilder()
                       .AddJsonFile("appSettings.json")
                       .Build();
@@ -115,13 +139,15 @@ var ConnectionString = config.GetSection("ConnectionStrings").Value;
 
 var services = new ServiceCollection();
 
-services.AddDbContext<AppDBContext>(options =>
+services.AddDbContextFactory<AppDBContext>(options =>
    options.UseSqlServer(ConnectionString)
 );
 
 IServiceProvider serviceProvider = services.BuildServiceProvider();
 
-using (var context = serviceProvider.GetService<AppDBContext>())
+var contextFactory = serviceProvider.GetService<IDbContextFactory<AppDBContext>>();
+
+using (var context = contextFactory!.CreateDbContext())
 {
     foreach (var item in context!.students)
     {
