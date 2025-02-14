@@ -178,4 +178,19 @@ using (var context = serviceProvider.GetService<AppDBContext>())
     {
         Console.WriteLine(item);
     }
+
+    var student = context.students.Where(x => x.StudentID == 1).FirstOrDefault();
+
+    student.Name = "Zakaria";
+
+    context.SaveChanges();
+
+    Console.WriteLine();
+
+    Console.WriteLine();
+    foreach (var item in context!.students)
+    {
+        Console.WriteLine(item);
+    }
+
 }

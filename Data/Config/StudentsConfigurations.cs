@@ -9,6 +9,7 @@ namespace EF_Core_Practices.Data.Config
         public void Configure(EntityTypeBuilder<Students> builder)
         {
             builder.ToTable("Students");
+            builder.HasKey(x => x.StudentID);
         }
     }
 }
